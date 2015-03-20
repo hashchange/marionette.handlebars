@@ -2,9 +2,9 @@
 
 Marionette.Handlebars does exactly what its name suggests: it adds support for Handlebars and Mustache templates to Marionette. 
 
-Marionette.Handlebars supports [precompiled templates][hlb-precompiled] as well. It does its job entirely behind the scenes - load it, and you are all set.
+Marionette.Handlebars supports [precompiled templates][hlb-precompiled] as well. It does its job entirely behind the scenes – load it, and you are all set.
 
-There really isn't much in terms of an API - nothing, in fact, except for an extension point in case you want to [lazy-load some templates][lazy-loading].
+There really isn't much in terms of an API – nothing, in fact, except for an extension point in case you want to [lazy-load some templates][lazy-loading].
 
 ## Dependencies and setup
 
@@ -20,7 +20,7 @@ If you have [precompiled your templates][hlb-precompiled], Marionette.Handlebars
 
 If you want to lazy-load some of your templates, you must implement a loader which matches your needs, such as the URL scheme. Marionette.Handlebars just provides an extension point for you.
 
-The method you need to overwrite, `Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate`, doesn't do anything out of the box. Replace it with your own implementation, along the follwing lines:
+The method you need to overwrite, `Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate`, doesn't do anything out of the box. Replace it with your own implementation, along the following lines:
 
 - Your loader method is called with the template ID as the first argument. The template ID is the value of the `template` property, or `template` constructor option, in your Marionette views. The template ID _would_ be a selector if your templates were read from the DOM. As you provide your own loader, it can be any string you choose.
 
@@ -116,8 +116,8 @@ Copyright (c) 2015 Michael Heim.
 
 [Backbone]: http://backbonejs.org/ "Backbone.js"
 [Underscore]: http://underscorejs.org/ "Underscore.js"
-[Marionette]: http://marionettejs.com/ "Marionette.js - The Backbone Framework"
-[Handlebars]: http://handlebarsjs.com/ "Handlebars.js - Minimal Templating on Steroids"
+[Marionette]: http://marionettejs.com/ "Marionette.js – The Backbone Framework"
+[Handlebars]: http://handlebarsjs.com/ "Handlebars.js – Minimal Templating on Steroids"
 [hlb-precompiled]: http://handlebarsjs.com/precompilation.html "Handlebars.js: Precompiling templates"
 [Marionette.TemplateCache-basic-usage]: http://marionettejs.com/docs/marionette.templatecache.html#basic-usage "Marionette.TemplateCache: Basic Usage"
 
@@ -125,8 +125,8 @@ Copyright (c) 2015 Michael Heim.
 [Bower]: http://bower.io/ "Bower: a package manager for the web"
 [npm]: https://npmjs.org/ "npm: Node Packaged Modules"
 [Grunt]: http://gruntjs.com/ "Grunt: The JavaScript Task Runner"
-[Karma]: http://karma-runner.github.io/ "Karma - Spectacular Test Runner for Javascript"
-[Mocha]: http://visionmedia.github.io/mocha/ "Mocha - the fun, simple, flexible JavaScript test framework"
+[Karma]: http://karma-runner.github.io/ "Karma – Spectacular Test Runner for Javascript"
+[Mocha]: http://visionmedia.github.io/mocha/ "Mocha – the fun, simple, flexible JavaScript test framework"
 [Chai]: http://chaijs.com/ "Chai: a BDD / TDD assertion library"
-[Sinon]: http://sinonjs.org/ "Sinon.JS - Versatile standalone test spies, stubs and mocks for JavaScript"
+[Sinon]: http://sinonjs.org/ "Sinon.JS – Versatile standalone test spies, stubs and mocks for JavaScript"
 [JSHint]: http://www.jshint.com/ "JSHint, a JavaScript Code Quality Tool"
