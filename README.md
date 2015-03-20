@@ -1,20 +1,55 @@
 # Marionette.Handlebars
 
-TAG LINE HERE.
+Marionette.Handlebars does exactly what its name suggests: it adds support for Handlebars and Mustache templates to Marionette. 
+
+Marionette.Handlebars supports [precompiled templates][hlb-precompiled] as well. It does its job entirely behind the scenes - load it, and you are all set.
+
+There really isn't much in terms of an API - nothing, in fact, except for an extension point in case you want to [lazy-load some templates][lazy-loading].
 
 ## Dependencies and setup
 
-// todo dependencies ... is the only dependency. Include marionette.handlebars.js after .... .
+Marionette.Handlebars, somewhat unsurprisingly, depends on the Marionette stack ([Underscore][], [Backbone][], [Marionette][]) and [Handlebars][]. Include marionette.handlebars.js after those are loaded.
 
 The stable version of Marionette.Handlebars is available in the `dist` directory ([dev][dist-dev], [prod][dist-prod]), including an AMD build ([dev][dist-amd-dev], [prod][dist-amd-prod]). If you use Bower, fetch the files with `bower install marionette.handlebars`. With npm, it is `npm install marionette.handlebars`.
 
-## Components
+## Precompiled templates
 
-## Usage and examples
+If you have [precompiled your templates][hlb-precompiled], Marionette.Handlebars retrieves them from the Handlebars cache. All you need to do is set the `template` property of a Marionette view to the ID of the compiled template (derived from the name of the template file). 
 
-### The basics
+## Lazy loading of templates
 
-### Options
+If you want to lazy-load some of your templates, you must implement a loader which matches your needs, such as the URL scheme. Marionette.Handlebars just provides an extension point for you.
+
+The method you need to overwrite, `Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate`, doesn't do anything out of the box. Replace it with your own implementation, along the follwing lines:
+
+- Your loader method is called with the template ID as the first argument. The template ID is the value of the `template` property, or `template` constructor option, in your Marionette views. The template ID _would_ be a selector if your templates were read from the DOM. As you provide your own loader, it can be any string you choose.
+
+- Your loader also receives an options argument which is passed around by Marionette. That argument [is initially passed to][Marionette.TemplateCache-basic-usage] `Marionette.TemplateCache.get()` and usually `undefined`. Have a look at the [Marionette documentation][Marionette.TemplateCache-basic-usage] if you intend to use it.
+
+- The loader must return the raw template HTML if successful, or `undefined` if it failed to fetch the template. 
+
+- Your loader **must not** be async.
+
+Here is an example of what such a loader might look like:
+
+```javascript
+Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate = function ( templateId, options ) {
+    var templateHtml,
+        templateUrl = "templates/" + templateId + ".handlebars";
+      
+    Backbone.$.ajax( {
+        url: templateUrl,
+        success: function( data ) {
+            templateHtml = data;
+        },
+        async: false
+    } );
+    
+    return templateHtml;
+};
+```
+
+Please be aware that lazy loader is only called as a last resort. The search for a matching template begins in the Handlebars cache of precompiled templates, then moves on to the DOM. Only if the template is not found in any of these places, the lazy loader gets its turn.
 
 ## Build process and tests
 
@@ -72,17 +107,20 @@ MIT.
 
 Copyright (c) 2015 Michael Heim.
 
-// todo review, has the test helper been used?
-Code in the data provider test helper: (c) 2014 Box, Inc., Apache 2.0 license. [See file][data-provider.js].
-
 [dist-dev]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/marionette.handlebars.js "marionette.handlebars.js"
 [dist-prod]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/marionette.handlebars.min.js "marionette.handlebars.min.js"
 [dist-amd-dev]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/amd/marionette.handlebars.js "marionette.handlebars.js, AMD build"
 [dist-amd-prod]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/amd/marionette.handlebars.min.js "marionette.handlebars.min.js, AMD build"
 
-[data-provider.js]: https://github.com/hashchange/marionette.handlebars/blob/master/spec/helpers/data-provider.js "Source code of data-provider.js"
+[lazy-loading]: #lazy-loading-of-templates
 
 [Backbone]: http://backbonejs.org/ "Backbone.js"
+[Underscore]: http://underscorejs.org/ "Underscore.js"
+[Marionette]: http://marionettejs.com/ "Marionette.js - The Backbone Framework"
+[Handlebars]: http://handlebarsjs.com/ "Handlebars.js - Minimal Templating on Steroids"
+[hlb-precompiled]: http://handlebarsjs.com/precompilation.html "Handlebars.js: Precompiling templates"
+[Marionette.TemplateCache-basic-usage]: http://marionettejs.com/docs/marionette.templatecache.html#basic-usage "Marionette.TemplateCache: Basic Usage"
+
 [Node.js]: http://nodejs.org/ "Node.js"
 [Bower]: http://bower.io/ "Bower: a package manager for the web"
 [npm]: https://npmjs.org/ "npm: Node Packaged Modules"
