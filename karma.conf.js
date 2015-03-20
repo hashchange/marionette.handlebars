@@ -34,8 +34,8 @@ module.exports = function(config) {
       // Component under test
       'src/marionette.handlebars.js',
 
-      // Test helpers - enable when needed
-      // 'spec/helpers/**/*.js',
+      // Test helpers
+      'spec/helpers/**/*.js',
 
       // Tests
       'spec/**/*.+(spec|test|tests).js'

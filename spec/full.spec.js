@@ -2,6 +2,10 @@
 (function () {
     "use strict";
 
+    function isMarionette1x () {
+        return ! Backbone.Marionette.VERSION;
+    }
+
     describe( 'Marionette.Handlebars', function () {
 
         var $template, domTemplateHtml, precompiledTemplateHtml, precompiled;
@@ -90,9 +94,11 @@
                     Backbone.Marionette.TemplateCache.get( "#template", _.clone( options ) );
                 } );
 
-                it( 'the options object is passed on to Handlebars when the template is being compiled', function () {
-                    expect( Handlebars.compile ).to.have.been.calledWithExactly( domTemplateHtml, options );
-                } );
+                itUnless( isMarionette1x(), "Skipped test. Options are not supported in Marionette 1.x",
+                    'the options object is passed on to Handlebars when the template is being compiled', function () {
+                        expect( Handlebars.compile ).to.have.been.calledWithExactly( domTemplateHtml, options );
+                    }
+                );
 
             } );
 
@@ -200,14 +206,16 @@
                     expect( Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate ).to.have.been.calledWith( "fictional.id" );
                 } );
 
-                it( 'an options object as second argument, if passed to Marionette.TemplateCache.get()', function () {
-                    var options = { foo: "bar" };
-                    try {
-                        Backbone.Marionette.TemplateCache.get( "fictional.id", _.clone( options ) );
-                    } catch ( err ) {}
+                itUnless( isMarionette1x(), "Skipped test. Options are not supported in Marionette 1.x",
+                    'an options object as second argument, if passed to Marionette.TemplateCache.get()', function () {
+                        var options = { foo: "bar" };
+                        try {
+                            Backbone.Marionette.TemplateCache.get( "fictional.id", _.clone( options ) );
+                        } catch ( err ) {}
 
-                    expect( Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate ).to.have.been.calledWithExactly( "fictional.id", options );
-                } );
+                        expect( Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate ).to.have.been.calledWithExactly( "fictional.id", options );
+                    }
+                );
 
             } );
 
