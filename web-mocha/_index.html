@@ -15,10 +15,11 @@
     <script>if ( !window.console ) { window.console = {}; window.console.log = window.console.assert = function () {}; }</script>
 
     <!-- libraries --><!-- edit and replace with your project libraries as needed -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/underscore/underscore.js"></script>
     <script src="../bower_components/backbone/backbone.js"></script>
     <script src="../bower_components/marionette/lib/backbone.marionette.js"></script>
-    <script src="../bower_components/handlebars/handlebars.runtime.js"></script>
+    <script src="../bower_components/handlebars/handlebars.js"></script>
 
     <!-- test framework -->
     <script src="../node_modules/mocha/mocha.js"></script>
@@ -49,8 +50,7 @@
     <!-- include source files here... -->
     <script src="../src/marionette.handlebars.js"></script>
 
-    <!-- test helpers --><!-- add more as needed -->
-    <script src="../spec/helpers/phantom-utils.js"></script>
+    <!-- test helpers --><!-- add as needed -->
 
     <!-- (include spec files here...) -->
     <!-- *.spec.js and *.test.js files in the spec dir are added automatically by `grunt interactive` -->

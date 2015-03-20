@@ -25,10 +25,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // Component dependencies
+      'bower_components/jquery/dist/jquery.js',
       'bower_components/underscore/underscore.js',
       'bower_components/backbone/backbone.js',
       'bower_components/marionette/lib/backbone.marionette.js',
-      'bower_components/handlebars/handlebars.runtime.js',
+      'bower_components/handlebars/handlebars.js',
 
       'lib-other/**/*.js',
 
