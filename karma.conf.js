@@ -31,13 +31,11 @@ module.exports = function(config) {
       'bower_components/marionette/lib/backbone.marionette.js',
       'bower_components/handlebars/handlebars.js',
 
-      'lib-other/**/*.js',
-
       // Component under test
       'src/marionette.handlebars.js',
 
-      // Test helpers
-      'spec/helpers/**/*.js',
+      // Test helpers - enable when needed
+      // 'spec/helpers/**/*.js',
 
       // Tests
       'spec/**/*.+(spec|test|tests).js'
