@@ -1,0 +1,45 @@
+{
+  "name": "marionette.handlebars",
+  "version": "0.1.0",
+  "homepage": "https://github.com/hashchange/marionette.handlebars",
+  "authors": [
+    "Michael Heim <heim@zeilenwechsel.de>"
+  ],
+  "description": "Using Marionette with Handlebars and Mustache templates.",
+  "main": "dist/marionette.handlebars.js",
+  "keywords": [
+    "backbone",
+    "marionette",
+    "handlebars",
+    "mustache",
+    "templates",
+    "views",
+    "models",
+    "collections"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "public",
+    "reports",
+    "demo",
+    "lib-other",
+    "web-mocha",
+    "spec",
+    "src",
+    "Gruntfile.js",
+    "karma.conf.js",
+    "package.json"
+  ],
+  "devDependencies": {},
+  "dependencies": {
+    "backbone": "^1.0.0 <1.2.0",
+    "underscore": "^1.5.0 <1.9.0",
+    "marionette": "^1.0.0 || ^2.0.0",
+    "handlebars": "~1.3.0 || ^2.0.0 || ^3.0.0"
+  }
+}
