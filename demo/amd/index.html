@@ -21,6 +21,12 @@
     <!-- Fix HTML5 tags in oldIE and other lacking legacy browsers -->
     <script src="../bower_demo_components/modernizr/modernizr.js"></script>
 
+    <script id="dom-template" data-tag-name="p" type="text/x-template">
+        This paragraph is served with a <strong>{{origin}} template</strong>. In addition, the containing element is
+        defined by data attributes of the template. It proves that Handlebars integration plays nicely with
+        Backbone.Declarative.Views.
+    </script>
+
 </head>
 <body>
     <!-- check that 'bower install' has been run in the demo dir if bower.json isn't empty -->
@@ -32,12 +38,12 @@
         <p class="row">This page uses the AMD build in the <code>dist</code> directory, not the files in <code>src</code>. In other words, run the <code>grunt</code> command first to build a current version.</p>
     </section>
 
-    <section>
+    <section class="content row">
         <!-- body content here... -->
 
     </section>
-    
-    <!-- libraries --><!-- edit and replace with your project libraries as needed -->
+
+    <!-- libraries -->
     <script data-main="amd" src="../bower_demo_components/requirejs/require.js"></script>
 
 </body>

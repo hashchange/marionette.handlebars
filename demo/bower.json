@@ -21,10 +21,11 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "^1",
-    "requirejs": "~2.1.16",
+    "backbone.declarative.views": "^2.0.0",
     "foundation": "~5.5.1",
-    "modernizr": "~2.8.3"
+    "jquery": "^1",
+    "modernizr": "~2.8.3",
+    "requirejs": "~2.1.16"
   },
   "resolutions": {
     "jquery": "^1"
