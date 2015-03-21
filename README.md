@@ -18,24 +18,36 @@ If you have [precompiled your templates][hlb-precompiled], Marionette.Handlebars
 
 ## Lazy loading of templates
 
-If you want to lazy-load some of your templates, you must implement a loader which matches your needs, such as the URL scheme. Marionette.Handlebars just provides an extension point for you.
+If you want to lazy-load some of your templates, you must implement a loader which works for your requirements – such as your URL scheme, for instance. Marionette.Handlebars just provides an extension point for you.
 
-The method you need to overwrite, `Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate`, doesn't do anything out of the box. Replace it with your own implementation, along the following lines:
+The method you need to overwrite, `Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate`, doesn't do anything out of the box. Replace it with your own implementation. Here is what you need to know.
 
-- Your loader method is called with the template ID as the first argument. The template ID is the value of the `template` property, or `template` constructor option, in your Marionette views. The template ID _would_ be a selector if your templates were read from the DOM. As you provide your own loader, it can be any string you choose.
+- Your loader is called with the template ID as the first argument. 
 
-- Your loader also receives an options argument which is passed around by Marionette. That argument [is initially passed to][Marionette.TemplateCache-basic-usage] `Marionette.TemplateCache.get()` and usually `undefined`. Have a look at the [Marionette documentation][Marionette.TemplateCache-basic-usage] if you intend to use it.
+  The template ID is the value of the `template` property, or `template` constructor option, in your Marionette views. The template ID _would_ be a selector if your templates were read from the DOM. But because you provide your own loader, it can be any string you choose.
 
-- The loader must return the raw template HTML if successful, or `undefined` if it failed to fetch the template. 
+- Your loader also receives an options argument which is passed around by Marionette. 
+
+  That argument [can initially be provided to][Marionette.TemplateCache-basic-usage] `Marionette.TemplateCache.get()`, but is usually `undefined`. Have a look at the few bits of information [in the Marionette documentation][Marionette.TemplateCache-basic-usage] to get started. 
+
+  Overall, though, the `options` argument is not very useful. Marionette views never pass it in when requesting a template. At a minimum, you'd have to override `Marionette.Renderer.render()` to make it work at all.
+
+- The loader must return the raw template HTML if successful, or `undefined` if it fails to fetch the template.
+
+  For security reasons, you cannot lazy-load compiled templates, ie executable Javscript code. If you want to go down that route, you must override the implementation of `Backbone.Marionette.TemplateCache.loadTemplate()` which is provided by Marionette.Handlebars, and roll your own. 
 
 - Your loader **must not** be async.
+
+  Yes, synchronous loading is terribly inefficient. But asynchronous template loading is well beyond what a generic Handlbars integration can provide to Marionette views. 
+
+  That said, you can easily fill in the blanks. If the templates are lazy-loaded asynchronously, the rendering of views must happen async as well. A few lines [in the AMD demo][amd-demo-async-loading] of Marionette.Handlebars might serve as an inspiration.
 
 Here is an example of what such a loader might look like:
 
 ```javascript
 Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate = function ( templateId, options ) {
     var templateHtml,
-        templateUrl = "templates/" + templateId + ".handlebars";
+        templateUrl = "templates/" + templateId + ".hbs";
       
     Backbone.$.ajax( {
         url: templateUrl,
@@ -111,6 +123,8 @@ Copyright (c) 2015 Michael Heim.
 [dist-prod]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/marionette.handlebars.min.js "marionette.handlebars.min.js"
 [dist-amd-dev]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/amd/marionette.handlebars.js "marionette.handlebars.js, AMD build"
 [dist-amd-prod]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/amd/marionette.handlebars.min.js "marionette.handlebars.min.js, AMD build"
+
+[amd-demo-async-loading]: https://github.com/hashchange/marionette.handlebars/blob/master/demo/amd/amd.js#L134-149 "Marionette.Handlebars: AMD demo – Async view creation"
 
 [lazy-loading]: #lazy-loading-of-templates
 
