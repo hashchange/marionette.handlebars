@@ -62,7 +62,7 @@ This is a global setting. The `lazyLoadTemplate()` method is allowed to return a
 
 ### An example
 
-A loader might look like this:
+A basic loader might look like this:
 
 ```javascript
 Marionette.TemplateCache.prototype.lazyLoadTemplate = function ( templateId, options ) {
@@ -81,7 +81,7 @@ Marionette.TemplateCache.prototype.lazyLoadTemplate = function ( templateId, opt
 };
 ```
 
-This is a very basic implementation. In real life, there should probably be a mechanism to prevent multiple requests of the same URL, which might be happening in parallel. (I have seen [Traffic Cop][traffic-cop] being [mentioned][los-techies-traffic-cop] as a helpful tool, but it seems abandoned. [More here.][traffic-cop-docs])
+Having a look at the [AMD demo][amd-demo] might give you some inspiration, too.
 
 ## Build process and tests
 
@@ -144,10 +144,11 @@ Copyright (c) 2015 Michael Heim.
 [dist-amd-dev]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/amd/marionette.handlebars.js "marionette.handlebars.js, AMD build"
 [dist-amd-prod]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/amd/marionette.handlebars.min.js "marionette.handlebars.min.js, AMD build"
 
+[amd-demo]: https://github.com/hashchange/marionette.handlebars/blob/master/demo/amd/amd.js "Marionette.Handlebars: AMD demo"
 [amd-demo-async-loading]: https://github.com/hashchange/marionette.handlebars/blob/master/demo/amd/amd.js#L134-149 "Marionette.Handlebars: AMD demo – Async view creation"
 
 [lazy-loading]: #lazy-loading-of-templates
-[lazy-load-compiled-templates]: 
+[lazy-load-compiled-templates]: #allowing-compiled-templates-to-be-lazy-loaded
 
 [Backbone]: http://backbonejs.org/ "Backbone.js"
 [Underscore]: http://underscorejs.org/ "Underscore.js"
