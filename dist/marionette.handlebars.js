@@ -1,4 +1,4 @@
-// Marionette.Handlebars, v0.1.0
+// Marionette.Handlebars, v0.1.1
 // Copyright (c)2015 Michael Heim, Zeilenwechsel.de
 // Distributed under MIT license
 // http://github.com/hashchange/marionette.handlebars
@@ -6,13 +6,14 @@
 ;( function( Backbone, _, Handlebars ) {
     "use strict";
 
-    var origLoadTemplate;
+    var origLoadTemplate,
+        Marionette = Backbone.Marionette;
 
-    if ( ! Backbone.Marionette ) throw new Error( "Load error: Backbone.Marionette is not available" );
+    if ( ! Marionette ) throw new Error( "Load error: Backbone.Marionette is not available" );
 
-    origLoadTemplate = Backbone.Marionette.TemplateCache.prototype.loadTemplate;
+    origLoadTemplate = Marionette.TemplateCache.prototype.loadTemplate;
 
-    _.extend( Backbone.Marionette.TemplateCache.prototype, {
+    _.extend( Marionette.TemplateCache.prototype, {
 
         /**
          * Loads and returns a template from the Handlebars cache, the DOM, or the server (if set up to do so). Throws
@@ -27,7 +28,7 @@
          *
          * If a template can't be found in either the Handlebars cache or the DOM, the job is passed on to the
          * lazyLoadTemplate() method. It is a noop by default. To use an actual loader and make it work for your needs,
-         * assign your own implementation to Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate.
+         * assign your own implementation to Marionette.TemplateCache.prototype.lazyLoadTemplate.
          *
          * @param   {string}           templateId  a selector, usually, or the file ID if the Handlebars cache is used
          * @param   {Object|undefined} options
@@ -90,9 +91,9 @@
             var errType = 'NoTemplateError',
                 errMsg = 'Could not find template: "' + templateId + '"';
 
-            if ( Backbone.Marionette.Error ) {
+            if ( Marionette.Error ) {
                 // Error handling in Marionette 2.x
-                throw new Backbone.Marionette.Error( { name: errType, message: errMsg } );
+                throw new Marionette.Error( { name: errType, message: errMsg } );
             } else if ( typeof throwError === "function" ) {
                 // Error handling in Marionette 1.x
                 throwError( errMsg, errType );                                              // jshint ignore:line
