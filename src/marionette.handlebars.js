@@ -34,7 +34,7 @@
          */
         loadTemplate: function ( templateId, options ) {
             var templateHtml,
-                precompiledTemplate = getPrecompiledTemplate( templateId );
+                precompiledTemplate = this.getPrecompiledTemplate( templateId );
 
             if ( ! precompiledTemplate || ! _.isFunction( precompiledTemplate ) ) {
                 try {
@@ -63,6 +63,22 @@
          */
         compileTemplate: function ( template, options ) {
             return _.isFunction( template ) ? template : Handlebars.compile( template, options );
+        },
+
+        /**
+         * Returns the precompiled Handlebars template for a given template ID, if it exists.
+         *
+         * NB In this case, the template ID is not a selector, but derived from the file name of the original template.
+         * See http://handlebarsjs.com/precompilation.html
+         *
+         * Override it if you have to perform some special magic for matching a Marionette templateId to the templateId
+         * of the Handlebars cache.
+         *
+         * @param   {string} templateId
+         * @returns {Function|undefined}
+         */
+        getPrecompiledTemplate: function ( templateId ) {
+            return Handlebars.templates && Handlebars.templates[templateId];
         },
 
         /**
@@ -103,19 +119,6 @@
         }
 
     } );
-
-    /**
-     * Returns the precompiled Handlebars template for a given template ID, if it exists.
-     *
-     * NB In this case, the template ID is not a selector, but derived from the file name of the original template.
-     * See http://handlebarsjs.com/precompilation.html
-     *
-     * @param   {string} templateId
-     * @returns {Function|undefined}
-     */
-    function getPrecompiledTemplate ( templateId ) {
-        return Handlebars.templates && Handlebars.templates[ templateId ];
-    }
 
     /**
      * Checks if the template data is a non-empty string.
