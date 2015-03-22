@@ -145,7 +145,7 @@ Copyright (c) 2015 Michael Heim.
 [dist-amd-prod]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/amd/marionette.handlebars.min.js "marionette.handlebars.min.js, AMD build"
 
 [amd-demo]: https://github.com/hashchange/marionette.handlebars/blob/master/demo/amd/amd.js "Marionette.Handlebars: AMD demo"
-[amd-demo-async-loading]: https://github.com/hashchange/marionette.handlebars/blob/master/demo/amd/amd.js#L134-149 "Marionette.Handlebars: AMD demo – Async view creation"
+[amd-demo-async-loading]: https://github.com/hashchange/marionette.handlebars/blob/master/demo/amd/amd.js#L160-179 "Marionette.Handlebars: AMD demo – Async view creation"
 
 [lazy-loading]: #lazy-loading-of-templates
 [lazy-load-compiled-templates]: #allowing-compiled-templates-to-be-lazy-loaded

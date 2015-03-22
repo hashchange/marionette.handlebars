@@ -24,13 +24,22 @@ requirejs.config( {
         //
         // For more on using precompiled templates, see http://goo.gl/rgNG2Y
         //
-        // Alternatively, there are a number of plugins handling precompiled templates:
+        // ATTN:
         //
-        // - SlexAxton/require-handlebars-plugin
-        // - epeli/requirejs-hbs
+        // Only the templates defined here, which are loaded by Require.js, are compiled with the '--amd' switch.
+        // Compiled templates which are lazy-loaded later on, by the client code in amd.js, must be compiled without it!
         //
-        // ... and probably more. Not used here, though.
-        'precompiled.templates': '../demo/amd/templates/precompiled/precompiled'
+        // A lazy loader implementation for Marionette.Handlebars must be synchronous. Hence, A(synchronous)MD does not
+        // work for it. Granted, the template code could still be injected synchronously, with a synchronous AJAX call
+        // (ok so far). But the actual template would be wrapped in a `define` function, which executes async - too late
+        // for the loader.
+        //
+        // Compiling them without the '--amd' switch gets rid of the `define` wrapper. But it creates another problem:
+        // Now the templates depend on a `Handlebars` global. Because Handlebars is loaded by Require.js, that global is
+        // missing. The client code (in amd.js) must expose Handlebars before compiled templates are lazy-loaded. A
+        // simple `window.Handlebars = Handlebars;` statement does the trick.
+
+        'precompiled.templates': '../demo/amd/templates/precompiled/amd/precompiled'
     },
 
     shim: {
