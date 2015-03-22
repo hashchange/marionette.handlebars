@@ -221,11 +221,16 @@
 
             describe( 'The lazyLoadTemplate() method triggers a friendly error in subsequent processing', function () {
 
-                var lazyLoadedTemplateId, expectedError;
+                var initialCompiledTemplatesFlag, lazyLoadedTemplateId, expectedError;
 
                 beforeEach( function () {
+                    initialCompiledTemplatesFlag = Marionette.TemplateCache.allowCompiledTemplatesOverHttp;
                     lazyLoadedTemplateId = "lazyLoaded";
-                    expectedError = 'Could not find template: "' + lazyLoadedTemplateId + '"';
+                    expectedError = 'Could not load template: "' + lazyLoadedTemplateId + '"';
+                } );
+
+                afterEach( function () {
+                    Marionette.TemplateCache.allowCompiledTemplatesOverHttp = initialCompiledTemplatesFlag;
                 } );
 
                 it( 'if its return value is undefined', function () {
@@ -238,7 +243,18 @@
                     expect( function () { Backbone.Marionette.TemplateCache.get( lazyLoadedTemplateId ); } ).to.throw( expectedError );
                 } );
 
-                it( 'if its return value is not a string', function () {
+                it( 'if its return value is an object', function () {
+                    Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate = function () { return { foo: "bar" }; };
+                    expect( function () { Backbone.Marionette.TemplateCache.get( lazyLoadedTemplateId ); } ).to.throw( expectedError );
+                } );
+
+                it( 'if its return value is a function, and the allowCompiledTemplatesOverHttp flag has not actively been enabled', function () {
+                    Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate = function () { return { foo: "bar" }; };
+                    expect( function () { Backbone.Marionette.TemplateCache.get( lazyLoadedTemplateId ); } ).to.throw( expectedError );
+                } );
+
+                it( 'if its return value is a function, and the allowCompiledTemplatesOverHttp flag been set to false explicitly', function () {
+                    Marionette.TemplateCache.allowCompiledTemplatesOverHttp = false;
                     Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate = function () { return { foo: "bar" }; };
                     expect( function () { Backbone.Marionette.TemplateCache.get( lazyLoadedTemplateId ); } ).to.throw( expectedError );
                 } );
@@ -246,6 +262,29 @@
                 it( 'if its return value is an empty string', function () {
                     Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate = function () { return ""; };
                     expect( function () { Backbone.Marionette.TemplateCache.get( lazyLoadedTemplateId ); } ).to.throw( expectedError );
+                } );
+
+            } );
+
+            describe( 'The lazyLoadTemplate() method is allowed to return a function', function () {
+
+                var initialCompiledTemplatesFlag, lazyLoadedTemplateId;
+
+                beforeEach( function () {
+                    initialCompiledTemplatesFlag = Marionette.TemplateCache.allowCompiledTemplatesOverHttp;
+                    lazyLoadedTemplateId = "lazyLoaded";
+                } );
+
+                afterEach( function () {
+                    Marionette.TemplateCache.allowCompiledTemplatesOverHttp = initialCompiledTemplatesFlag;
+                } );
+
+                it( 'if the allowCompiledTemplatesOverHttp flag has been enabled', function () {
+                    var compiled = Handlebars.compile( precompiledTemplateHtml );
+                    Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate = function () { return compiled; };
+
+                    Marionette.TemplateCache.allowCompiledTemplatesOverHttp = true;
+                    expect( Backbone.Marionette.TemplateCache.get( lazyLoadedTemplateId ) ).to.equal( compiled );
                 } );
 
             } );
@@ -296,7 +335,7 @@
 
                 it( 'if the template cannot be found', function () {
                     var templateId = "nonexistent";
-                    expect( function () { Backbone.Marionette.TemplateCache.get( templateId ); } ).to.throw( 'Could not find template: "' + templateId + '"' );
+                    expect( function () { Backbone.Marionette.TemplateCache.get( templateId ); } ).to.throw( 'Could not load template: "' + templateId + '"' );
                 } );
 
             } );

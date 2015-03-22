@@ -38,7 +38,7 @@ The method you need to overwrite, `Marionette.TemplateCache.prototype.lazyLoadTe
 
 - The loader must return the raw template HTML if successful, or `undefined` if it fails to fetch the template.
 
-  For security reasons, you cannot lazy-load compiled templates, ie executable Javascript code. If you want to go down that route, you must override the implementation of `Marionette.TemplateCache.prototype.loadTemplate()` which is provided by Marionette.Handlebars, and roll your own.
+  If you want to fetch and return compiled templates, you need to [enable it explicitly][lazy-load-compiled-templates].
 
 - Your loader **must not** be async.
 
@@ -49,6 +49,16 @@ The method you need to overwrite, `Marionette.TemplateCache.prototype.lazyLoadTe
   A _very_ basic implementation of async loading can be seen [in the AMD demo][amd-demo-async-loading] of Marionette.Handlebars.
 
 Please be aware that the lazy loader is only called as a last resort. The search for a matching template begins in the Handlebars cache of precompiled templates, then moves on to the DOM. Only if the template is not found in any of these places, the lazy loader gets its turn.
+
+### Allowing compiled templates to be lazy-loaded
+
+For security reasons, you cannot lazy-load compiled templates, ie executable Javascript code. If you want to go down that route, you must explicitly enable it:
+
+```javascript
+Marionette.TemplateCache.allowCompiledTemplatesOverHttp = true;
+```
+
+This is a global setting. The `lazyLoadTemplate()` method is allowed to return a function then, in addition to strings.
 
 ### An example
 
@@ -137,6 +147,7 @@ Copyright (c) 2015 Michael Heim.
 [amd-demo-async-loading]: https://github.com/hashchange/marionette.handlebars/blob/master/demo/amd/amd.js#L134-149 "Marionette.Handlebars: AMD demo – Async view creation"
 
 [lazy-loading]: #lazy-loading-of-templates
+[lazy-load-compiled-templates]: 
 
 [Backbone]: http://backbonejs.org/ "Backbone.js"
 [Underscore]: http://underscorejs.org/ "Underscore.js"

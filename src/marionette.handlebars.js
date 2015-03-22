@@ -8,6 +8,9 @@
 
     origLoadTemplate = Marionette.TemplateCache.prototype.loadTemplate;
 
+    /** @type {boolean}  flag allowing the lazy loading of compiled templates */
+    Marionette.TemplateCache.allowCompiledTemplatesOverHttp = false;
+
     _.extend( Marionette.TemplateCache.prototype, {
 
         /**
@@ -41,7 +44,7 @@
                 if ( ! isValidTemplateHtml( templateHtml ) ) templateHtml = this.lazyLoadTemplate( templateId, options );
 
                 // Throw an error if the template is missing, just like the original implementation.
-                if ( ! isValidTemplateHtml( templateHtml ) ) this.throwTemplateError( templateId );
+                if ( ! isValidTemplateReturnValue( templateHtml ) ) this.throwTemplateError( templateId );
             }
 
             return templateHtml || precompiledTemplate;
@@ -84,7 +87,7 @@
         throwTemplateError: function ( templateId ) {
 
             var errType = 'NoTemplateError',
-                errMsg = 'Could not find template: "' + templateId + '"';
+                errMsg = 'Could not load template: "' + templateId + '". It does not exist, is of an illegal type, or has content which cannot be processed.';
 
             if ( Marionette.Error ) {
                 // Error handling in Marionette 2.x
@@ -122,6 +125,19 @@
      */
     function isValidTemplateHtml ( templateData ) {
         return _.isString( templateData ) && templateData.length > 0;
+    }
+
+    /**
+     * Checks if the template data is a valid return value for loadTemplate().
+     *
+     * - A non-empty string always passes the test. This is the format of raw template HTML.
+     * - A function may or may not be acceptable, depending on the allowCompiledTemplatesOverHttp flag.
+     *
+     * @param   {*} templateData
+     * @returns {boolean}
+     */
+    function isValidTemplateReturnValue ( templateData ) {
+        return isValidTemplateHtml( templateData ) || Marionette.TemplateCache.allowCompiledTemplatesOverHttp && _.isFunction( templateData );
     }
 
 }( Backbone, _, Handlebars ));
