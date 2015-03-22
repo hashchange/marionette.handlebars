@@ -1,4 +1,4 @@
-// Marionette.Handlebars, v0.1.1
+// Marionette.Handlebars, v1.0.0
 // Copyright (c)2015 Michael Heim, Zeilenwechsel.de
 // Distributed under MIT license
 // http://github.com/hashchange/marionette.handlebars
@@ -38,6 +38,9 @@
     
         origLoadTemplate = Marionette.TemplateCache.prototype.loadTemplate;
     
+        /** @type {boolean}  flag allowing the lazy loading of compiled templates */
+        Marionette.TemplateCache.allowCompiledTemplatesOverHttp = false;
+    
         _.extend( Marionette.TemplateCache.prototype, {
     
             /**
@@ -61,7 +64,7 @@
              */
             loadTemplate: function ( templateId, options ) {
                 var templateHtml,
-                    precompiledTemplate = getPrecompiledTemplate( templateId );
+                    precompiledTemplate = this.getPrecompiledTemplate( templateId );
     
                 if ( ! precompiledTemplate || ! _.isFunction( precompiledTemplate ) ) {
                     try {
@@ -71,7 +74,7 @@
                     if ( ! isValidTemplateHtml( templateHtml ) ) templateHtml = this.lazyLoadTemplate( templateId, options );
     
                     // Throw an error if the template is missing, just like the original implementation.
-                    if ( ! isValidTemplateHtml( templateHtml ) ) this.throwTemplateError( templateId );
+                    if ( ! isValidTemplateReturnValue( templateHtml ) ) this.throwTemplateError( templateId );
                 }
     
                 return templateHtml || precompiledTemplate;
@@ -90,6 +93,22 @@
              */
             compileTemplate: function ( template, options ) {
                 return _.isFunction( template ) ? template : Handlebars.compile( template, options );
+            },
+    
+            /**
+             * Returns the precompiled Handlebars template for a given template ID, if it exists.
+             *
+             * NB In this case, the template ID is not a selector, but derived from the file name of the original template.
+             * See http://handlebarsjs.com/precompilation.html
+             *
+             * Override it if you have to perform some special magic for matching a Marionette templateId to the templateId
+             * of the Handlebars cache.
+             *
+             * @param   {string} templateId
+             * @returns {Function|undefined}
+             */
+            getPrecompiledTemplate: function ( templateId ) {
+                return Handlebars.templates && Handlebars.templates[templateId];
             },
     
             /**
@@ -114,7 +133,7 @@
             throwTemplateError: function ( templateId ) {
     
                 var errType = 'NoTemplateError',
-                    errMsg = 'Could not find template: "' + templateId + '"';
+                    errMsg = 'Could not load template: "' + templateId + '". It does not exist, is of an illegal type, or has content which cannot be processed.';
     
                 if ( Marionette.Error ) {
                     // Error handling in Marionette 2.x
@@ -132,19 +151,6 @@
         } );
     
         /**
-         * Returns the precompiled Handlebars template for a given template ID, if it exists.
-         *
-         * NB In this case, the template ID is not a selector, but derived from the file name of the original template.
-         * See http://handlebarsjs.com/precompilation.html
-         *
-         * @param   {string} templateId
-         * @returns {Function|undefined}
-         */
-        function getPrecompiledTemplate ( templateId ) {
-            return Handlebars.templates && Handlebars.templates[ templateId ];
-        }
-    
-        /**
          * Checks if the template data is a non-empty string.
          *
          * @param   {*} templateData
@@ -152,6 +158,19 @@
          */
         function isValidTemplateHtml ( templateData ) {
             return _.isString( templateData ) && templateData.length > 0;
+        }
+    
+        /**
+         * Checks if the template data is a valid return value for loadTemplate().
+         *
+         * - A non-empty string always passes the test. This is the format of raw template HTML.
+         * - A function may or may not be acceptable, depending on the allowCompiledTemplatesOverHttp flag.
+         *
+         * @param   {*} templateData
+         * @returns {boolean}
+         */
+        function isValidTemplateReturnValue ( templateData ) {
+            return isValidTemplateHtml( templateData ) || Marionette.TemplateCache.allowCompiledTemplatesOverHttp && _.isFunction( templateData );
         }
     
     }( Backbone, _, Handlebars ));
