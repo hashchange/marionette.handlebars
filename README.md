@@ -20,7 +20,11 @@ If you have [precompiled your templates][hlb-precompiled], Marionette.Handlebars
 
 If you want to lazy-load some of your templates, you must implement a loader which works for your requirements – such as your URL scheme, for instance. Marionette.Handlebars just provides an extension point for you.
 
-The method you need to overwrite, `Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate`, doesn't do anything out of the box. Replace it with your own implementation. Here is what you need to know.
+A caveat: Loading templates on demand is _terrible_ for the performance of an application. The additional overhead of an HTTP request, particularly on mobile, is way beyond acceptable levels for UI elements which the user is already waiting for. Lazy template loading can make sense, though, for elements which are pre-rendered, but not yet exposed to the user. Use it judiciously.
+
+### How to implement a loader
+
+The method you need to overwrite, `Marionette.TemplateCache.prototype.lazyLoadTemplate`, doesn't do anything out of the box. Replace it with your own implementation. Here is what you need to know.
 
 - Your loader is called with the template ID as the first argument. 
 
@@ -34,18 +38,24 @@ The method you need to overwrite, `Backbone.Marionette.TemplateCache.prototype.l
 
 - The loader must return the raw template HTML if successful, or `undefined` if it fails to fetch the template.
 
-  For security reasons, you cannot lazy-load compiled templates, ie executable Javscript code. If you want to go down that route, you must override the implementation of `Backbone.Marionette.TemplateCache.loadTemplate()` which is provided by Marionette.Handlebars, and roll your own. 
+  For security reasons, you cannot lazy-load compiled templates, ie executable Javascript code. If you want to go down that route, you must override the implementation of `Marionette.TemplateCache.prototype.loadTemplate()` which is provided by Marionette.Handlebars, and roll your own.
 
 - Your loader **must not** be async.
 
-  Yes, synchronous loading is terribly inefficient. But asynchronous template loading is well beyond what a generic Handlbars integration can provide to Marionette views. 
+  Yes, synchronous loading is terribly inefficient. But asynchronous template loading is well beyond what a generic Handlebars integration can provide to Marionette views. 
 
-  That said, you can easily fill in the blanks. If the templates are lazy-loaded asynchronously, the rendering of views must happen async as well. A few lines [in the AMD demo][amd-demo-async-loading] of Marionette.Handlebars might serve as an inspiration.
+  That said, you can certainly fill in the blanks. If the templates are lazy-loaded asynchronously, the rendering of views must happen async as well. Also, there should probably be a mechanism to prevent multiple requests of the same template URL, which might be happening in parallel. (I have seen [Traffic Cop][traffic-cop] being [mentioned][los-techies-traffic-cop] as a helpful tool, but it seems abandoned. [More here.][traffic-cop-docs])
 
-Here is an example of what such a loader might look like:
+  A _very_ basic implementation of async loading can be seen [in the AMD demo][amd-demo-async-loading] of Marionette.Handlebars.
+
+Please be aware that the lazy loader is only called as a last resort. The search for a matching template begins in the Handlebars cache of precompiled templates, then moves on to the DOM. Only if the template is not found in any of these places, the lazy loader gets its turn.
+
+### An example
+
+A loader might look like this:
 
 ```javascript
-Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate = function ( templateId, options ) {
+Marionette.TemplateCache.prototype.lazyLoadTemplate = function ( templateId, options ) {
     var templateHtml,
         templateUrl = "templates/" + templateId + ".hbs";
       
@@ -61,7 +71,7 @@ Backbone.Marionette.TemplateCache.prototype.lazyLoadTemplate = function ( templa
 };
 ```
 
-Please be aware that lazy loader is only called as a last resort. The search for a matching template begins in the Handlebars cache of precompiled templates, then moves on to the DOM. Only if the template is not found in any of these places, the lazy loader gets its turn.
+This is a very basic implementation. In real life, there should probably be a mechanism to prevent multiple requests of the same URL, which might be happening in parallel. (I have seen [Traffic Cop][traffic-cop] being [mentioned][los-techies-traffic-cop] as a helpful tool, but it seems abandoned. [More here.][traffic-cop-docs])
 
 ## Build process and tests
 
@@ -134,6 +144,9 @@ Copyright (c) 2015 Michael Heim.
 [Handlebars]: http://handlebarsjs.com/ "Handlebars.js – Minimal Templating on Steroids"
 [hlb-precompiled]: http://handlebarsjs.com/precompilation.html "Handlebars.js: Precompiling templates"
 [Marionette.TemplateCache-basic-usage]: http://marionettejs.com/docs/marionette.templatecache.html#basic-usage "Marionette.TemplateCache: Basic Usage"
+[traffic-cop]: https://github.com/ifandelse/TrafficCop "Traffic Cop – Simple js lib to prevent multiple simultaneous client requests to same HTTP endpoint"
+[traffic-cop-docs]: http://web.archive.org/web/20130224223736/http://freshbrewedcode.com/jimcowart/2011/11/25/traffic-cop/ "Jim Cowart: Traffic Cop"
+[los-techies-traffic-cop]: http://lostechies.com/derickbailey/2012/03/20/trafficcop-a-jquery-plugin-to-limit-ajax-requests-for-a-resource/ " Derick Bailey – TrafficCop: A jQuery Plugin To Limit AJAX Requests For A Resource"
 
 [Node.js]: http://nodejs.org/ "Node.js"
 [Bower]: http://bower.io/ "Bower: a package manager for the web"

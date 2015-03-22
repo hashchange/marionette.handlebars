@@ -76,7 +76,7 @@ module.exports = function (grunt) {
         port: KARMA_PORT
       },
       test: {
-        reporters: ['mocha'],
+        reporters: ['progress'],
         singleRun: true
       },
       build: {
