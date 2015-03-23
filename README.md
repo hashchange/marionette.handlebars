@@ -14,17 +14,17 @@ The stable version of Marionette.Handlebars is available in the `dist` directory
 
 ## Precompiled templates
 
-If you have [precompiled your templates][hlb-precompiled], Marionette.Handlebars retrieves them from the Handlebars cache. All you need to do is set the `template` property of a Marionette view to the ID of the compiled template (derived from the name of the template file). 
+If you have [precompiled your templates][hlb-precompiled], Marionette.Handlebars retrieves them from the Handlebars cache. You just need to set the `template` property of a Marionette view to the ID of the compiled template (derived from the name of the template file). 
 
 ## Lazy loading of templates
 
 If you want to lazy-load some of your templates, you must implement a loader which works for your requirements – such as your URL scheme, for instance. Marionette.Handlebars just provides an extension point for you.
 
-A caveat: Loading templates on demand is _terrible_ for the performance of an application. The additional overhead of an HTTP request, particularly on mobile, is way beyond acceptable levels for UI elements which the user is already waiting for. Lazy template loading can make sense, though, for elements which are pre-rendered, but not yet exposed to the user. Use it judiciously.
+A word of caution: Loading templates on demand is _terrible_ for the performance of an application. The additional overhead of an HTTP request, particularly on mobile, is way beyond acceptable levels for UI elements which the user is already waiting for. Lazy template loading can make sense, though, for elements which are pre-rendered, but not yet exposed to the user. Use it judiciously.
 
 ### How to implement a loader
 
-The method you need to overwrite, `Marionette.TemplateCache.prototype.lazyLoadTemplate`, doesn't do anything out of the box. Replace it with your own implementation. Here is what you need to know.
+You need to override `Marionette.TemplateCache.prototype.lazyLoadTemplate`. Out of the box, the method doesn't do anything. Replace it with your own implementation. Here is what you need to know.
 
 - Your loader is called with the template ID as the first argument. 
 
@@ -42,9 +42,9 @@ The method you need to overwrite, `Marionette.TemplateCache.prototype.lazyLoadTe
 
 - Your loader **must not** be async.
 
-  Yes, synchronous loading is terribly inefficient. But asynchronous template loading is well beyond what a generic Handlebars integration can provide to Marionette views. 
+  Yes, synchronous loading is terribly inefficient. But asynchronous template loading is beyond what a generic Handlebars integration can provide to Marionette views. 
 
-  That said, you can certainly fill in the blanks. If the templates are lazy-loaded asynchronously, the rendering of views must happen async as well. Also, there should probably be a mechanism to prevent multiple requests of the same template URL, which might be happening in parallel. (I have seen [Traffic Cop][traffic-cop] being [mentioned][los-techies-traffic-cop] as a helpful tool, but it seems abandoned. [More here.][traffic-cop-docs])
+  That said, you can certainly fill in the blanks. If the templates are lazy-loaded asynchronously, then the views must be rendered async as well. Also, there should probably be a mechanism to prevent multiple, simultaneous requests for the same template URL. (I have seen [Traffic Cop][traffic-cop] being [mentioned][los-techies-traffic-cop] as a helpful tool, but it seems abandoned. [More here.][traffic-cop-docs])
 
   A _very_ basic implementation of async loading can be seen [in the AMD demo][amd-demo-async-loading] of Marionette.Handlebars.
 
@@ -81,7 +81,7 @@ Marionette.TemplateCache.prototype.lazyLoadTemplate = function ( templateId, opt
 };
 ```
 
-Having a look at the [AMD demo][amd-demo] might give you some inspiration, too.
+The loader in the [AMD demo][amd-demo] might give you some inspiration, too.
 
 ## Build process and tests
 
