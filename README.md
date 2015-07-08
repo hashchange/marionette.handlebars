@@ -133,6 +133,22 @@ In case anything about the test and build process needs to be changed, have a lo
 
 New test files in the `spec` directory are picked up automatically, no need to edit the configuration for that.
 
+## Release Notes
+
+### v1.0.1
+
+- Updated Backbone dependency
+
+### v1.0.0
+
+- Added support for lazy-loading precompiled templates
+- Exposed getPrecompiledTemplate
+- Added lazy-loaded, precompiled templates to demo
+
+### v0.1.0 - 0.1.1
+
+- Initial development, tests, documentation
+
 ## License
 
 MIT.
