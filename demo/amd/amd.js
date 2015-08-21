@@ -1,3 +1,5 @@
+// amd.js
+
 require( [
 
     'jquery',
@@ -79,7 +81,7 @@ require( [
 
             Backbone.$.ajax( {
                 url: config.url,
-                success: function ( data ) { content = data },
+                success: function ( data ) { content = data; },
 
                 async: false,
                 cache: true,
