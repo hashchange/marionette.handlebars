@@ -17,7 +17,7 @@ module.exports = function (grunt) {
     meta: {
       version: '<%= pkg.version %>',
       banner: '// Marionette.Handlebars, v<%= meta.version %>\n' +
-        '// Copyright (c)<%= grunt.template.today("yyyy") %> Michael Heim, Zeilenwechsel.de\n' +
+        '// Copyright (c) <%= grunt.template.today("yyyy") %> Michael Heim, Zeilenwechsel.de\n' +
         '// Distributed under MIT license\n' +
         '// http://github.com/hashchange/marionette.handlebars\n' +
         '\n'
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
       options: {
         banner: "<%= meta.banner %>",
         mangle: {
-          except: ['jQuery', 'Backbone', '_']
+          except: ['jQuery', 'Zepto', 'Backbone', '_']
         },
         sourceMap: true
       },

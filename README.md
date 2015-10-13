@@ -89,7 +89,7 @@ If you'd like to fix, customize or otherwise improve the project: here are your 
 
 ### Setup
 
-[npm][] and [Bower][] set up the environment for you. 
+[npm][] and [Bower][] set up the environment for you.
 
 - The only thing you've got to have on your machine is [Node.js]. Download the installer [here][Node.js].
 - Open a command prompt in the project directory.
