@@ -6,6 +6,8 @@ Marionette.Handlebars supports [precompiled templates][hlb-precompiled] as well.
 
 There really isn't much in terms of an API – nothing, in fact, except for an extension point in case you want to [lazy-load some templates][lazy-loading].
 
+If you are a happy user of this project already, you can support its development by [donating to it][donations]. You absolutely don't have to, of course, but perhaps it is something you [might actually want to do][donations].
+
 ## Dependencies and setup
 
 Marionette.Handlebars, somewhat unsurprisingly, depends on the Marionette stack ([Underscore][], [Backbone][], [Marionette][]) and [Handlebars][]. Include marionette.handlebars.js after those are loaded.
@@ -133,6 +135,16 @@ In case anything about the test and build process needs to be changed, have a lo
 
 New test files in the `spec` directory are picked up automatically, no need to edit the configuration for that.
 
+## Supporting development
+
+To my own surprise, [a kind soul][donations-idea] wanted to donate to one of my projects, but there hadn't been a link. [Now there is.][donations-paypal-link]
+
+Please don't feel obliged in the slightest. It's [MIT][license], and so it's free. That said, if you do want to support the maintenance and development of this component, or any of my [other open-source projects][hashchange-projects-overview], I _am_ thankful for your contribution.
+
+Naturally, these things don't pay for themselves – not even remotely. The components I write aim to be well tested, performant, and reliable. That may not sound terribly fascinating, but at the end of the day, these attributes make all the difference in production. And maintaining that standard is rather costly, time-wise. That's why donations are welcome, no matter how small, and be it as nod of appreciation to keep spirits up. [Thank you!][donations-paypal-link]
+
+[![Donate with Paypal][donations-paypal-button]][donations-paypal-link]
+
 ## Release Notes
 
 ### v1.0.1
@@ -185,3 +197,10 @@ Copyright (c) 2015 Michael Heim.
 [Chai]: http://chaijs.com/ "Chai: a BDD / TDD assertion library"
 [Sinon]: http://sinonjs.org/ "Sinon.JS – Versatile standalone test spies, stubs and mocks for JavaScript"
 [JSHint]: http://www.jshint.com/ "JSHint, a JavaScript Code Quality Tool"
+
+[donations]: #supporting-development "Supporting development"
+[donations-idea]: https://github.com/hashchange/jquery.documentsize/issues/1 "jQuery.documentSize, issue #1: Thank you!"
+[donations-paypal-link]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UANTZ5BZ2T6U4 "Donate with Paypal"
+[donations-paypal-button]: https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif "Donate with Paypal"
+[license]: #license "License"
+[hashchange-projects-overview]: http://hashchange.github.io/ "Hacking the front end: Backbone, Marionette, jQuery and the DOM. An overview of open-source projects by @hashchange."
