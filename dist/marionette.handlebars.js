@@ -1,5 +1,5 @@
-// Marionette.Handlebars, v1.0.1
-// Copyright (c)2015 Michael Heim, Zeilenwechsel.de
+// Marionette.Handlebars, v1.0.2
+// Copyright (c) 2015-2016 Michael Heim, Zeilenwechsel.de
 // Distributed under MIT license
 // http://github.com/hashchange/marionette.handlebars
 
