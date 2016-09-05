@@ -151,6 +151,12 @@ That's why donations are welcome, and be it as nod of appreciation to keep spiri
 
 ## Release Notes
 
+### v2.0.0
+
+- Removed the separate AMD/Node builds in `dist/amd`. Module systems and browser globals are now supported by the same file, `dist/marionette.handlebars.js` (or `.min.js`)
+- Updated Marionette dependency to include Marionette 3
+- Exposed version in `Marionette.TemplateCache.MarionetteHandlebarsVersion`
+
 ### v1.0.2
 
 - Updated Backbone and Handlebars dependencies
