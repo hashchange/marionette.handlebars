@@ -8,9 +8,10 @@
 
     describe( 'Marionette.Handlebars', function () {
 
-        var $template, domTemplateHtml, precompiledTemplateHtml, precompiled;
+        var $template, domTemplateHtml, precompiledTemplateHtml, precompiled, MarionetteView;
 
         beforeEach( function () {
+            MarionetteView = getMarionetteView();
 
             // Template in the DOM.
             domTemplateHtml = "A template with {{content}} in the DOM.";
@@ -72,7 +73,7 @@
                 it( 'it is used by a Marionette view if its template property has been set to the selector of the template', function () {
                     var compiled = Handlebars.compile( domTemplateHtml ),
                         content = { content: "amazing content" },
-                        view = new Backbone.Marionette.ItemView( {
+                        view = new MarionetteView( {
                             template: "#template",
                             model: new Backbone.Model( content )
                         } );
@@ -133,7 +134,7 @@
 
                 it( 'it is used by a Marionette view if its template property has been set to the ID of the cached template', function () {
                     var content = { content: "amazing content" },
-                        view = new Backbone.Marionette.ItemView( {
+                        view = new MarionetteView( {
                             template: "fake.precompiled",
                             model: new Backbone.Model( content )
                         } );
@@ -316,7 +317,7 @@
                     // without any hiccups.
                     var compiled = Handlebars.compile( lazyLoadedTemplateHtml ),
                         content = { content: "amazing content" },
-                        view = new Backbone.Marionette.ItemView( {
+                        view = new MarionetteView( {
                             template: "a! very! weird! template! id!",
                             model: new Backbone.Model( content )
                         } );

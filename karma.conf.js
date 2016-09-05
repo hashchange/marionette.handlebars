@@ -25,11 +25,31 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // Component dependencies
+
+      // Using the latest jQuery by default. Switch to jQuery 1.x or 2.x as needed.
+      //
+      // NB Tests run through the interactive web interface use jQuery 1.x. Use `grunt interactive` or `grunt webtest`
+      // for them.
+
       'bower_components/jquery/dist/jquery.js',
+      // 'bower_components/jquery-legacy-v1/dist/jquery.js',
+      // 'bower_components/jquery-legacy-v2/dist/jquery.js',
+
       'bower_components/underscore/underscore.js',
       'bower_components/backbone/backbone.js',
-      'bower_components/marionette/lib/backbone.marionette.js',
       'bower_components/handlebars/handlebars.js',
+
+      // Marionette (must be loaded after Backbone.Declarative.Views)
+      //
+      // Using the latest Marionette by default. Switch to Marionette 2.x as needed, or run Karma with the config for
+      // legacy Marionette.
+      //
+      // NB Tests run through the interactive web interface use Marionette 2.x. Use `grunt interactive` or `grunt webtest`
+      // for them.
+
+      // 'bower_components/marionette-legacy/lib/backbone.marionette.js',
+      'bower_components/backbone.radio/build/backbone.radio.js',
+      'bower_components/marionette/lib/backbone.marionette.js',
 
       // Component under test
       'src/marionette.handlebars.js',

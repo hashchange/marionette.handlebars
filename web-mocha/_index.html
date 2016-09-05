@@ -15,15 +15,23 @@
     <script>if ( !window.console ) { window.console = {}; window.console.log = window.console.assert = function () {}; }</script>
 
     <!-- libraries --><!-- edit and replace with your project libraries as needed -->
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
+
+    <!-- ATTN Using jQuery 1.x here by default. Change as needed. -->
+    <!--<script src="../bower_components/jquery/dist/jquery.js"></script>-->
+    <script src="../bower_components/jquery-legacy-v1/dist/jquery.js"></script>
+    <!--<script src="../bower_components/jquery-legacy-v2/dist/jquery.js"></script>-->
+
     <script src="../bower_components/underscore/underscore.js"></script>
     <script src="../bower_components/backbone/backbone.js"></script>
-    <script src="../bower_components/marionette/lib/backbone.marionette.js"></script>
     <script src="../bower_components/handlebars/handlebars.js"></script>
+
+    <!-- ATTN Using Marionette 2.x here by default. -->
+    <script src="../bower_components/marionette-legacy/lib/backbone.marionette.js"></script>
+    <!--<script src="../bower_components/backbone.radio/build/backbone.radio.js"></script>-->
+    <!--<script src="../bower_components/marionette/lib/backbone.marionette.js"></script>-->
 
     <!-- test framework -->
     <script src="../node_modules/mocha/mocha.js"></script>
-    <script src="../node_modules/mocha-clean/index.js"></script>
     <script>
         mocha.setup('bdd');
         // List files which should be dropped from a stack trace, reducing clutter. (See https://github.com/rstacruz/mocha-clean)
@@ -54,6 +62,7 @@
     <script src="../spec/helpers/basic-utils.js"></script>
     <script src="../spec/helpers/dom-utils.js"></script>
     <script src="../spec/helpers/suite-utils.js"></script>
+    <script src="../spec/helpers/various-utils.js"></script>
 
     <!-- (include spec files here...) -->
     <!-- *.spec.js and *.test.js files in the spec dir are added automatically by `grunt interactive` -->
