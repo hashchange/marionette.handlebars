@@ -12,7 +12,9 @@ If you are a happy user of this project already, you can support its development
 
 Marionette.Handlebars, somewhat unsurprisingly, depends on the Marionette stack ([Underscore][], [Backbone][], [Marionette][]) and [Handlebars][]. Include marionette.handlebars.js after those are loaded.
 
-The stable version of Marionette.Handlebars is available in the `dist` directory ([dev][dist-dev], [prod][dist-prod]), including an AMD build ([dev][dist-amd-dev], [prod][dist-amd-prod]). If you use Bower, fetch the files with `bower install marionette.handlebars`. With npm, it is `npm install marionette.handlebars`.
+When loaded as a module (e.g. AMD, Node), Marionette.Handlebars does not export a meaningful value. It solely lives in the Marionette namespace.
+
+The stable version of Marionette.Handlebars is available in the `dist` directory ([dev][dist-dev], [prod][dist-prod]). If you use Bower, fetch the files with `bower install marionette.handlebars`. With npm, it is `npm install marionette.handlebars`.
 
 ## Precompiled templates
 
@@ -175,11 +177,9 @@ Copyright (c) 2015-2016 Michael Heim.
 
 [dist-dev]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/marionette.handlebars.js "marionette.handlebars.js"
 [dist-prod]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/marionette.handlebars.min.js "marionette.handlebars.min.js"
-[dist-amd-dev]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/amd/marionette.handlebars.js "marionette.handlebars.js, AMD build"
-[dist-amd-prod]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/amd/marionette.handlebars.min.js "marionette.handlebars.min.js, AMD build"
 
-[amd-demo]: https://github.com/hashchange/marionette.handlebars/blob/master/demo/amd/amd.js "Marionette.Handlebars: AMD demo"
-[amd-demo-async-loading]: https://github.com/hashchange/marionette.handlebars/blob/master/demo/amd/amd.js#L160-179 "Marionette.Handlebars: AMD demo – Async view creation"
+[amd-demo]: https://github.com/hashchange/marionette.handlebars/blob/master/demo/amd/main.js "Marionette.Handlebars: AMD demo"
+[amd-demo-async-loading]: https://github.com/hashchange/marionette.handlebars/blob/master/demo/amd/main.js#L165-L184 "Marionette.Handlebars: AMD demo – Async view creation"
 
 [lazy-loading]: #lazy-loading-of-templates
 [lazy-load-compiled-templates]: #allowing-compiled-templates-to-be-lazy-loaded

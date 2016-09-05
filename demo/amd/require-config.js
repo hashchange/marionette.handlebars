@@ -18,7 +18,7 @@ requirejs.config( {
         "handlebars-legacy-v3": "bower_components/handlebars-legacy-v3/handlebars",
 
         "backbone.declarative.views": "demo/bower_demo_components/backbone.declarative.views/dist/backbone.declarative.views",
-        "marionette.handlebars": "/dist/amd/marionette.handlebars",
+        "marionette.handlebars": "dist/marionette.handlebars",
 
         // Pulling in precompiled templates. The templates are compiled with the '--amd' switch, e.g. with
         //
