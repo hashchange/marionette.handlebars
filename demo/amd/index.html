@@ -45,10 +45,15 @@
 
     <!-- libraries -->
     <script src="../bower_demo_components/requirejs/require.js"></script>
+
+    <!-- Runtime async script loading -->
     <script src="require-config.js"></script>
     <script>
-        // Relative to the baseUrl defined in require-config.js
-        require( ['../demo/amd/amd'] );
+        // Main file, set to the name of the main module. The name is defined in the paths config, in require-config.js.
+        // If a path were used here, it would be relative to the baseUrl defined in require-config.js (which is set to
+        // project root):
+        // require( ['demo/amd/main'] );
+        require( ['local.main'] );
     </script>
 
 </body>

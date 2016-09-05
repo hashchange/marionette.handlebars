@@ -1,4 +1,4 @@
-// amd.js
+// main.js
 
 require( [
 
@@ -17,7 +17,9 @@ require( [
 
         Marionette = Backbone.Marionette,
         $container = $( ".content" ),
-        BaseView = Marionette.ItemView.extend( {
+
+        MarionetteView = Marionette.ItemView || Marionette.View,
+        BaseView = MarionetteView.extend( {
             tagName: "p"
         } );
 
@@ -39,7 +41,8 @@ require( [
 
         getTemplateUrl: function ( templateId, options ) {
             var isPrecompiled = this.isPrecompiled( templateId ),
-                prefix = isPrecompiled ? "templates/precompiled/non-amd/" : "templates/raw/",
+                versionInfix = isLegacyHandlebars() ? "legacy" : "modern",
+                prefix = isPrecompiled ? "templates/precompiled/" + versionInfix + "/non-amd/" : "templates/raw/",
                 suffix = isPrecompiled ? "" : ".hbs";
 
             return prefix + templateId + suffix;
@@ -97,9 +100,9 @@ require( [
 
     // Load a template from the DOM.
     //
-    // The el is defined by the template in this case, using Backbone.Declarative.Views. Hence, we use a plain ItemView,
-    // rather than the BaseView which also defines the el.
-    domView = new Marionette.ItemView( {
+    // The el is defined by the template in this case, using Backbone.Declarative.Views. Hence, we use a plain ItemView
+    // (or View, in Marionette 3), rather than the local BaseView which also defines the el.
+    domView = new MarionetteView( {
         model: new Backbone.Model( { origin: "DOM-based" } ),
         template: "#dom-template"
     } );
@@ -178,6 +181,14 @@ require( [
 
             show( view );
         } );
+    }
+
+    function getHandlebarsVersion () {
+        return +Handlebars.VERSION[0]
+    }
+
+    function isLegacyHandlebars () {
+        return getHandlebarsVersion() < 4;
     }
 
 } );
