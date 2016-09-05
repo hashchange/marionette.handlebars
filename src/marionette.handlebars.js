@@ -44,6 +44,8 @@
     /** @type {boolean}  flag allowing the lazy loading of compiled templates */
     Marionette.TemplateCache.allowCompiledTemplatesOverHttp = false;
 
+    Marionette.TemplateCache.MarionetteHandlebarsVersion = "__COMPONENT_VERSION_PLACEHOLDER__";
+
     _.extend( Marionette.TemplateCache.prototype, {
 
         /**
