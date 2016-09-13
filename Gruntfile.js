@@ -140,6 +140,11 @@ module.exports = function (grunt) {
         reporters: ['progress'],
         singleRun: true
       },
+      "test-legacy": {
+        configFile: 'karma.legacy.conf.js',
+        reporters: ['progress'],
+        singleRun: true
+      },
       build: {
         reporters: ['progress'],
         singleRun: true
@@ -345,6 +350,7 @@ module.exports = function (grunt) {
   grunt.registerTask('lint', ['jshint:components']);
   grunt.registerTask('hint', ['jshint:components']);        // alias
   grunt.registerTask('test', ['jshint:components', 'karma:test']);
+  grunt.registerTask('test-legacy', ['jshint:components', 'karma:test-legacy']);
   grunt.registerTask('webtest', ['preprocess:interactive', 'sails-linker:interactive_sinon', 'sails-linker:interactive_spec', 'connect:testNoReload']);
   grunt.registerTask('interactive', ['preprocess:interactive', 'sails-linker:interactive_sinon', 'sails-linker:interactive_spec', 'connect:test', 'watch:livereloadTest']);
   grunt.registerTask('demo', ['connect:demo', 'focus:demo']);
@@ -360,6 +366,8 @@ module.exports = function (grunt) {
 
   // Special tasks, not mentioned in Readme documentation:
   //
+  // - test-legacy:
+  //   runs the unit tests with legacy Marionette (version 2.x)
   // - requirejs:
   //   creates build files for the AMD demo with r.js
   // - build-dirty:

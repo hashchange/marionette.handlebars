@@ -26,25 +26,22 @@ module.exports = function(config) {
     files: [
       // Component dependencies
 
-      // Using the latest jQuery by default. Likewise for Handlebars and Marionette. Switch to legacy versions as needed.
-      //
-      // NB Tests run through the interactive web interface use legacy versions: jQuery 1, Handlebars 3, Marionette 2.
-      // Use `grunt interactive` or `grunt webtest` for them.
+      // Using legacy versions here: jQuery 1, Handlebars 3, Marionette 2. Switch to modern versions as needed.
 
-      // 'bower_components/jquery-legacy-v1/dist/jquery.js',
+      'bower_components/jquery-legacy-v1/dist/jquery.js',
       // 'bower_components/jquery-legacy-v2/dist/jquery.js',
-      'bower_components/jquery/dist/jquery.js',
+      // 'bower_components/jquery/dist/jquery.js',
 
       'bower_components/underscore/underscore.js',
       'bower_components/backbone/backbone.js',
 
       // 'bower_components/handlebars-legacy-v2/handlebars.js',
-      // 'bower_components/handlebars-legacy-v3/handlebars.js',
-      'bower_components/handlebars/handlebars.js',
+      'bower_components/handlebars-legacy-v3/handlebars.js',
+      // 'bower_components/handlebars/handlebars.js',
 
-      // 'bower_components/marionette-legacy/lib/backbone.marionette.js',
-      'bower_components/backbone.radio/build/backbone.radio.js',
-      'bower_components/marionette/lib/backbone.marionette.js',
+      'bower_components/marionette-legacy/lib/backbone.marionette.js',
+      // 'bower_components/backbone.radio/build/backbone.radio.js',
+      // 'bower_components/marionette/lib/backbone.marionette.js',
 
       // Component under test
       'src/marionette.handlebars.js',
