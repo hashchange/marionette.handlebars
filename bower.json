@@ -36,7 +36,7 @@
     "package.json"
   ],
   "devDependencies": {
-    "jquery": "^3.0.0 <3.2.0",
+    "jquery": "^3.0.0 <3.3.0",
     "jquery-legacy-v1": "jquery#^1.5.0",
     "jquery-legacy-v2": "jquery#^2.0.0",
     "handlebars-legacy-v2": "handlebars#^2.0.0",
