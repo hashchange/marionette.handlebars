@@ -165,7 +165,7 @@ New test files in the `spec` directory are picked up automatically, no need to e
 
 MIT.
 
-Copyright (c) 2015-2024 Michael Heim.
+Copyright (c) 2015-2025 Michael Heim.
 
 [dist-dev]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/marionette.handlebars.js "marionette.handlebars.js"
 [dist-prod]: https://raw.github.com/hashchange/marionette.handlebars/master/dist/marionette.handlebars.min.js "marionette.handlebars.min.js"
